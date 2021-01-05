@@ -63,7 +63,7 @@ Physics* Physics::GetInstance()
 	return m_instance;
 }
 
-bool Physics::Collision3D(btCollisionObject* obj1, int id1, int index1, btCollisionObject* obj2, int id2, int index2)
+bool Physics::Collision3D(btCollisionObject* obj1, btCollisionObject* obj2)
 {
 	if ((obj1->getBroadphaseHandle()->m_aabbMax.x() < obj2->getBroadphaseHandle()->m_aabbMin.x()) || (obj1->getBroadphaseHandle()->m_aabbMin.x() > obj2->getBroadphaseHandle()->m_aabbMax.x()))
 	{

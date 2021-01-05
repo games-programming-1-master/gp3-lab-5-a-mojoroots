@@ -16,7 +16,7 @@
 #include"cSoundMgr.h"
 
 
-
+const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 Application* Application::m_application = nullptr;
 static cSoundMgr* theSoundMgr = cSoundMgr::getInstance();
 Entity* a = new Entity(); // ground object
@@ -45,6 +45,8 @@ glm::vec3 play2Pos; // player 2 position for use in ball spawn
 glm::quat play2Rot; // player 2 rotation unused
 int player1Lives = 5; // inital player 1 lives integer
 int player2Lives = 5; // inital player 2 lives integer
+bool player1Won = false;
+bool player2Won = false;
 bool musicon = true;
 Application::Application()
 {
@@ -479,32 +481,42 @@ void Application::GameInit()
 
 void Application::player1Wins()
 {
-	// displays player 2's lives and that player 1 has won on the console window
-	std::cout << "Player2 has" + player2Lives << "Lives left" << std::endl;
-	std::cout << "Player 1 Wins" << std::endl;
-	// creates the player 1 wins object
-	m_entities.push_back(l);
-	l->AddComponent(
-		new MeshRenderer(
-			// sets the model to be used
-			Resources::GetInstance()->GetModel("Models/Player2Wins.obj"),
-			// sets the shader to be used
-			Resources::GetInstance()->GetShader("simple"),
-			// sets the texture to be used
-			Resources::GetInstance()->GetTexture("Images/Textures/Blue.png"))
-	);
-	MeshRenderer* b = l->GetComponent<MeshRenderer>();
-	// sets the position of the player 1 wins object
-	l->GetTransform()->SetPosition(glm::vec3(0.f, 5.f, 0.f));
-	// sets the rotation of the player 1 wins object
-	l->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
-	// adds a rigidbody to the player 1 wins object
-	l->AddComponent<RigidBody>();
-	// sets the rigidbody size of the player 1 wins object
-	l->GetComponent<RigidBody>()->Init(new BoxShape(glm::vec3(1.f, 1.f, 1.f)));
-	l->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
-	// sets the scale of the player 1 wins object
-	l->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
+
+	for (int i = 0; i < 1; i++)
+	{
+
+
+
+
+
+
+		// displays player 2's lives and that player 1 has won on the console window
+		std::cout << "Player2 has" + player2Lives << "Lives left" << std::endl;
+		std::cout << "Player 1 Wins" << std::endl;
+		// creates the player 1 wins object
+		m_entities.push_back(l);
+		l->AddComponent(
+			new MeshRenderer(
+				// sets the model to be used
+				Resources::GetInstance()->GetModel("Models/Player2Wins.obj"),
+				// sets the shader to be used
+				Resources::GetInstance()->GetShader("simple"),
+				// sets the texture to be used
+				Resources::GetInstance()->GetTexture("Images/Textures/Blue.png"))
+		);
+		MeshRenderer* b = l->GetComponent<MeshRenderer>();
+		// sets the position of the player 1 wins object
+		l->GetTransform()->SetPosition(glm::vec3(0.f, 5.f, 0.f));
+		// sets the rotation of the player 1 wins object
+		l->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
+		// adds a rigidbody to the player 1 wins object
+		l->AddComponent<RigidBody>();
+		// sets the rigidbody size of the player 1 wins object
+		l->GetComponent<RigidBody>()->Init(new BoxShape(glm::vec3(1.f, 1.f, 1.f)));
+		l->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
+		// sets the scale of the player 1 wins object
+		l->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
+	}
 }
 
 void Application::player2Wins()
@@ -544,7 +556,7 @@ void Application::Loop()
 	//std::cout << playerX << std::endl;
 	auto prevTicks = std::chrono::high_resolution_clock::now();
 	SDL_Event event;
-
+	
 	while (m_appState != AppState::QUITTING)
 	{
 		if (Physics::GetInstance()->Collision3D(b->GetComponent<RigidBody>()->Get(), d->GetComponent<RigidBody>()->Get()) == true)
@@ -683,6 +695,7 @@ void Application::Loop()
 		// win condition for Player 2
 		if (player1Lives <= 0)
 		{
+			
 			player2Wins();
 
 			
@@ -691,6 +704,7 @@ void Application::Loop()
 		// win condition for player 1
 		if (player2Lives <= 0)
 		{ 
+			
 			player1Wins();
 			
 		}
@@ -711,7 +725,7 @@ void Application::Loop()
 				break;
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
-				case SDLK_a:
+				/*case SDLK_a:
 					// alters player 1 transfrom to move them left by one
 					b->GetTransform()->AddPosition(glm::vec3(1.0f, 0.f, 0.f));
 					break;
@@ -727,6 +741,7 @@ void Application::Loop()
 					// alters player 1 transfrom to move them forward by 1
 					b->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 1.f));
 					break;
+					
 				case SDLK_q:
 					// alters player 1 rpation to rotate the left by 90 degrees
 					b->GetTransform()->AddRotation(glm::quat(1.f, 0.f, 1.f, 0.f));
@@ -747,6 +762,7 @@ void Application::Loop()
 						ballInPlay = true;
 					}
 					break;
+					*/
 				case SDLK_r:
 					// resets player 1's position in case they get stuck
 					b->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
@@ -778,6 +794,7 @@ void Application::Loop()
 					cc->Start2();
 					m_mainCamera->SetS_camera();
 					break;
+					/*
 				case SDLK_i:
 					c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 1.f));
 					break;
@@ -799,6 +816,7 @@ void Application::Loop()
 						p2Shot = true;
 					}
 					break;
+					*/
 				case SDL_MOUSEMOTION:
 					INPUT->MoveMouse(glm::ivec2(event.motion.xrel, event.motion.yrel));
 					SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -849,7 +867,52 @@ void Application::Loop()
 		//update and render all entities
 		Update(deltaTime);
 		Render();
-
+		currentKeyStates[SDL_SCANCODE_RETURN];
+		// player 1 controls
+			if (currentKeyStates[SDL_SCANCODE_A])
+			{b->GetTransform()->AddPosition(glm::vec3(0.2f, 0.f, 0.f));}
+			if (currentKeyStates[SDL_SCANCODE_D])
+			{b->GetTransform()->AddPosition(glm::vec3(-0.2f, 0.f, 0.f));}
+			if (currentKeyStates[SDL_SCANCODE_W])
+			{b->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 0.2f));}
+			if (currentKeyStates[SDL_SCANCODE_S])
+			{b->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, -0.2f));}
+			if (currentKeyStates[SDL_SCANCODE_F]) {
+				if (ballInPlay == false)
+				{
+					theSoundMgr->getSnd("shoot")->play(0);
+					Spawn();
+					// applies a central impules to player 1 ball to shoot it forwards
+					e->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, 35.0f));
+					ballInPlay = true;
+				}
+			}
+			// player 2 controls
+			if (currentKeyStates[SDL_SCANCODE_J])
+			{
+				c->GetTransform()->AddPosition(glm::vec3(0.2f, 0.f, 0.f));
+			}
+			if (currentKeyStates[SDL_SCANCODE_L])
+			{
+				c->GetTransform()->AddPosition(glm::vec3(-0.2f, 0.f, 0.f));
+			}
+			if (currentKeyStates[SDL_SCANCODE_I])
+			{
+				c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 0.2f));
+			}
+			if (currentKeyStates[SDL_SCANCODE_K])
+			{
+				c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, -0.2f));
+			}
+			if (currentKeyStates[SDL_SCANCODE_H]) {
+				if (p2Shot == false)
+				{
+					theSoundMgr->getSnd("shoot")->play(0);
+					Spawn2();
+					k->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, -25.0f));
+					p2Shot = true;
+				}
+			}
 
 
 		SDL_GL_SwapWindow(m_window);
