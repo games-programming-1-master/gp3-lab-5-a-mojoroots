@@ -510,6 +510,7 @@ void Application::Loop()
 				//c->GetComponent<MeshRenderer>()->ChangeTexture(Resources::GetInstance()->GetTexture("Images/Textures/Blue.png"));
 				//Delay(1);
 				//timer1();
+				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				
 				//using namespace std::this_thread;
@@ -521,32 +522,37 @@ void Application::Loop()
 
 				// reduces player 2 lives
 				player2Lives--;
+				// prints player 2's current lifes to console
 				std::cout << player2Lives << std::endl;
-				
+				// sets ball in play to false
 				ballInPlay = false;
 			}
 			
 			// controls player 1's ball collision with walls
 			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, f->GetComponent<RigidBody>()->Get(), 1, 1) == true)
 			{
+				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;			
 			}
 
 			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, g->GetComponent<RigidBody>()->Get(), 1, 1) == true)
 			{
+				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;
 			}
 
 			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, h->GetComponent<RigidBody>()->Get(), 1, 1) == true)
 			{
+				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;
 			}
 
 			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, i->GetComponent<RigidBody>()->Get(), 1, 1) == true)
 			{
+				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;
 
@@ -697,9 +703,6 @@ void Application::Loop()
 				break;
 			case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
-
-
-
 				case SDLK_a:
 					// alters player 1 transfrom to move them left by one
 					b->GetTransform()->AddPosition(glm::vec3(1.0f, 0.f, 0.f));
@@ -734,92 +737,60 @@ void Application::Loop()
 						// applies a central impules to player 1 ball to shoot it forwards
 						e->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, 35.0f));
 						ballInPlay = true;
-						
 					}
 					break;
 				case SDLK_r:
 					// resets player 1's position in case they get stuck
 					b->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
-						
-
-				case SDLK_o:
+				case SDLK_3:
 					m_mainCamera->SetProjOrtho(-500, (float)WINDOW_W, 0, (float)WINDOW_H, 0.1f, 1000.f);
 					break;
-				case SDLK_p:
+				case SDLK_4:
 					m_mainCamera->SetProjPersp(45.f, (float)WINDOW_W / (float)WINDOW_H, 0.1f, 1000.f);
 					break;
-
 				case SDLK_m:
 					if (camDistance <= 0) {
 						camDistance += 10.0f;
 					}
 					std::cout << camDistance;
 					break;
-
 				case SDLK_n:
 					if (camDistance >= 0) {
 						camDistance -= 10.0f;
 					}
 					std::cout << camDistance;
-
 					break;
-
 				case SDLK_2:
-
-
 					b->AddComponent(cc);
 					cc->Start();
 					m_mainCamera->SetM_camera();
-
 					break;
-
-
-
-
-
 				case SDLK_1:
-
 					a->AddComponent(cc);
 					cc->Start2();
 					m_mainCamera->SetS_camera();
-
 					break;
-
-				
-
 				case SDLK_i:
-
 					c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 1.f));
-
 					break;
-
 				case SDLK_k:
 					c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, -1.f));
 					break;
-
 				case SDLK_j:
 					c->GetTransform()->AddPosition(glm::vec3(1.0f, 0.f, 0.f));
 					break;
-
 				case SDLK_l:
 					c->GetTransform()->AddPosition(glm::vec3(-1.0f, 0.f, 0.f));
-
 					break;
 				case SDLK_h:
-					
 					if (p2Shot == false)
 					{
 						theSoundMgr->getSnd("shoot")->play(0);
 						Spawn2();
-
 						k->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, -25.0f));
 						p2Shot = true;
 					}
-
-
 					break;
-
-
 				case SDL_MOUSEMOTION:
 					INPUT->MoveMouse(glm::ivec2(event.motion.xrel, event.motion.yrel));
 					SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -828,11 +799,8 @@ void Application::Loop()
 						b->GetTransform()->RotateEulerAxis((m_worldDeltaTime * 1) * event.motion.xrel, b->GetTransform()->GetUp());
 						b->GetTransform()->RotateEulerAxis((m_worldDeltaTime * 1) * event.motion.yrel, b->GetTransform()->GetRight());
 					}
-
 					break;
-
 				case SDLK_b:
-
 					if (musicon == true)
 					{
 						Mix_PauseMusic();
@@ -844,17 +812,15 @@ void Application::Loop()
 						musicon = true;
 					}
 						break;
-
 				case SDLK_u:
 					c->GetTransform()->AddRotation(glm::quat(1.f, 0.f, 1.f, 0.f));
 					c->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
 					break;
-
-
-				}
 				case SDLK_o:
 					c->GetTransform()->AddRotation(glm::quat(1.f, 0.f, -1.f, 0.f));
 					break;
+				}
+				
 
 
 
