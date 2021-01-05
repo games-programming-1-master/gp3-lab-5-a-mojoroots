@@ -45,6 +45,8 @@ private:
 	void Spawn2();
 	void timer1();
 	void Delay(int nSecs);
+	void player1Wins();
+	void player2Wins();
 
 public:
 	//public functions

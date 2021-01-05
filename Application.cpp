@@ -477,7 +477,65 @@ void Application::GameInit()
 
 }
 
+void Application::player1Wins()
+{
+	// displays player 2's lives and that player 1 has won on the console window
+	std::cout << "Player2 has" + player2Lives << "Lives left" << std::endl;
+	std::cout << "Player 1 Wins" << std::endl;
+	// creates the player 1 wins object
+	m_entities.push_back(l);
+	l->AddComponent(
+		new MeshRenderer(
+			// sets the model to be used
+			Resources::GetInstance()->GetModel("Models/Player2Wins.obj"),
+			// sets the shader to be used
+			Resources::GetInstance()->GetShader("simple"),
+			// sets the texture to be used
+			Resources::GetInstance()->GetTexture("Images/Textures/Blue.png"))
+	);
+	MeshRenderer* b = l->GetComponent<MeshRenderer>();
+	// sets the position of the player 1 wins object
+	l->GetTransform()->SetPosition(glm::vec3(0.f, 5.f, 0.f));
+	// sets the rotation of the player 1 wins object
+	l->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
+	// adds a rigidbody to the player 1 wins object
+	l->AddComponent<RigidBody>();
+	// sets the rigidbody size of the player 1 wins object
+	l->GetComponent<RigidBody>()->Init(new BoxShape(glm::vec3(1.f, 1.f, 1.f)));
+	l->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
+	// sets the scale of the player 1 wins object
+	l->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
+}
 
+void Application::player2Wins()
+{
+	//displays console message showing player 1's lives and that player 2 has won
+	std::cout << "Player1 has" + player1Lives << "Lives left" << std::endl;
+	std::cout << "Player 2 Wins" << std::endl;
+	// adds a 3d object showing player 2 has won
+	m_entities.push_back(j);
+	j->AddComponent(
+		new MeshRenderer(
+			// sets the model to be used
+			Resources::GetInstance()->GetModel("Models/Player2Wins.obj"),
+			// sets the shader to be used
+			Resources::GetInstance()->GetShader("simple"),
+			// sets the texture to be used
+			Resources::GetInstance()->GetTexture("Images/Textures/Red.png"))
+	);
+	MeshRenderer* a = j->GetComponent<MeshRenderer>();
+	// sets the location for player 2 wins object
+	j->GetTransform()->SetPosition(glm::vec3(0.f, 5.f, 0.f));
+	// sets the rotation for player 2 wins object
+	j->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
+	// adds a rigid body to player 2 wins object
+	j->AddComponent<RigidBody>();
+	// sets the rigidbody size of player 2 wins object
+	j->GetComponent<RigidBody>()->Init(new BoxShape(glm::vec3(1.f, 1.f, 1.f)));
+	j->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
+	// sets the scale of player 2 wins object
+	j->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
+}
 
 
 void Application::Loop()
@@ -625,32 +683,7 @@ void Application::Loop()
 		// win condition for Player 2
 		if (player1Lives <= 0)
 		{
-			//displays console message showing player 1's lives and that player 2 has won
-			std::cout << "Player1 has" + player1Lives <<  "Lives left" << std::endl;
-			std::cout << "Player 2 Wins" << std::endl;
-			// adds a 3d object showing player 2 has won
-			m_entities.push_back(j);
-			j->AddComponent(
-				new MeshRenderer(
-					// sets the model to be used
-					Resources::GetInstance()->GetModel("Models/Player2Wins.obj"),
-					// sets the shader to be used
-					Resources::GetInstance()->GetShader("simple"),
-					// sets the texture to be used
-					Resources::GetInstance()->GetTexture("Images/Textures/Red.png"))
-			);
-			MeshRenderer* a = j->GetComponent<MeshRenderer>();
-			// sets the location for player 2 wins object
-			j->GetTransform()->SetPosition(glm::vec3(0.f, 5.f, 0.f));
-			// sets the rotation for player 2 wins object
-			j->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
-			// adds a rigid body to player 2 wins object
-			j->AddComponent<RigidBody>();
-			// sets the rigidbody size of player 2 wins object
-			j->GetComponent<RigidBody>()->Init(new BoxShape(glm::vec3(1.f, 1.f, 1.f)));
-			j->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
-			// sets the scale of player 2 wins object
-			j->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
+			player2Wins();
 
 			
 		}
@@ -658,32 +691,7 @@ void Application::Loop()
 		// win condition for player 1
 		if (player2Lives <= 0)
 		{ 
-			// displays player 2's lives and that player 1 has won on the console window
-			std::cout << "Player2 has" + player2Lives << "Lives left" << std::endl;
-			std::cout << "Player 1 Wins" << std::endl;
-			// creates the player 1 wins object
-			m_entities.push_back(l);
-			l->AddComponent(
-				new MeshRenderer(
-					// sets the model to be used
-					Resources::GetInstance()->GetModel("Models/Player2Wins.obj"),
-					// sets the shader to be used
-					Resources::GetInstance()->GetShader("simple"),
-					// sets the texture to be used
-					Resources::GetInstance()->GetTexture("Images/Textures/Blue.png"))
-			);
-			MeshRenderer* b = l->GetComponent<MeshRenderer>();
-			// sets the position of the player 1 wins object
-			l->GetTransform()->SetPosition(glm::vec3(0.f, 5.f, 0.f));
-			// sets the rotation of the player 1 wins object
-			l->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
-			// adds a rigidbody to the player 1 wins object
-			l->AddComponent<RigidBody>();
-			// sets the rigidbody size of the player 1 wins object
-			l->GetComponent<RigidBody>()->Init(new BoxShape(glm::vec3(1.f, 1.f, 1.f)));
-			l->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
-			// sets the scale of the player 1 wins object
-			l->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
+			player1Wins();
 			
 		}
 
