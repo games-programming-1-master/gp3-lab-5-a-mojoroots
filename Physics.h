@@ -22,7 +22,7 @@ public:
 	static Physics* GetInstance();
 	inline btDynamicsWorld* GetWorld() { return GetInstance()->m_world; };
 	void AddRigidbody(RigidBody* r);
-	bool Collision3D(btCollisionObject* obj1, int id1, int index1, btCollisionObject* obj2, int id2, int index2);
+	bool Collision3D(btCollisionObject* obj1, btCollisionObject* obj2);
 	void PreUpdate();
 	void Update(float deltaTime);
 	void Quit();

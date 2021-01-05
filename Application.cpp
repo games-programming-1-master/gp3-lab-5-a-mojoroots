@@ -174,18 +174,18 @@ void Application::Delay(int nSecs)
 {
 	// delay timer used to change player colour currently unused
 
-	e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
-	ballInPlay = false;
+	//e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
+	//ballInPlay = false;
 	// sets timer
 	int seconds = 1000 * nSecs;
 	clock_t startTime = clock();
 
 	while (clock() < startTime + seconds)
 	{
-		c->GetComponent<MeshRenderer>()->ChangeTexture(Resources::GetInstance()->GetTexture("Images/Textures/red.png"));
+		//c->GetComponent<MeshRenderer>()->ChangeTexture(Resources::GetInstance()->GetTexture("Images/Textures/red.png"));
 	}
 
-	
+	//Delay(4);
 }
 
 void Application::timer1()
@@ -547,12 +547,12 @@ void Application::Loop()
 
 	while (m_appState != AppState::QUITTING)
 	{
-		if (Physics::GetInstance()->Collision3D(b->GetComponent<RigidBody>()->Get(), 0, 0, d->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+		if (Physics::GetInstance()->Collision3D(b->GetComponent<RigidBody>()->Get(), d->GetComponent<RigidBody>()->Get()) == true)
 		{
 			std::cout << "Hit A" << std::endl;
 		}
 
-		if (Physics::GetInstance()->Collision3D(b->GetComponent<RigidBody>()->Get(), 0, 0, c->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+		if (Physics::GetInstance()->Collision3D(b->GetComponent<RigidBody>()->Get(), c->GetComponent<RigidBody>()->Get()) == true)
 		{
 			std::cout << "Hit C" << std::endl;
 		}
@@ -561,7 +561,7 @@ void Application::Loop()
 		if (ballInPlay == true)
 		{
 			// controls balls collision with player 2
-			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, c->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), c->GetComponent<RigidBody>()->Get()) == true)
 			{
 				std::cout << "Hit Player 2" << std::endl;
 
@@ -587,28 +587,28 @@ void Application::Loop()
 			}
 			
 			// controls player 1's ball collision with walls
-			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, f->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), f->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;			
 			}
 
-			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, g->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), g->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;
 			}
 
-			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, h->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), h->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;
 			}
 
-			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), 0, 0, i->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(e->GetComponent<RigidBody>()->Get(), i->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
@@ -623,7 +623,7 @@ void Application::Loop()
 		{
 			
 			// controls balls collision with player 1
-			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), 0, 0, b->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), b->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//Prints to console that player 1 has been hit
 				std::cout << "Hit Player 1" << std::endl;
@@ -647,28 +647,28 @@ void Application::Loop()
 			}
 
 			// controls Player 2's ball collision with walls
-			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), 0, 0, f->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), f->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 2's ball under the map once it has collided
 				k->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				p2Shot = false;
 			}
 
-			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), 0, 0, g->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), g->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 2's ball under the map once it has collided
 				k->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				p2Shot = false;
 			}
 
-			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), 0, 0, h->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), h->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 2's ball under the map once it has collided
 				k->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				p2Shot = false;
 			}
 
-			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), 0, 0, i->GetComponent<RigidBody>()->Get(), 1, 1) == true)
+			if (Physics::GetInstance()->Collision3D(k->GetComponent<RigidBody>()->Get(), i->GetComponent<RigidBody>()->Get()) == true)
 			{
 				//repositions player 2's ball under the map once it has collided
 				k->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
