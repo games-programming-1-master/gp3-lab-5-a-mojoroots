@@ -33,7 +33,7 @@ void Resources::AddTexture(const std::string& directory)
 	if (m_textures.find(directory) == m_textures.end())
 	{
 		m_textures[directory] = std::make_shared <Texture>(ASSET_PATH + directory);
-		LOG_DEBUG("Texture Loaded from " + directory);
+		LOG_DEBUG("Texture Loaded from " + ASSET_PATH + directory);
 	}
 }
 

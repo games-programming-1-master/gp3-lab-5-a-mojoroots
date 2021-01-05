@@ -15,6 +15,7 @@
 
 #include <SDL.h>
 #include <SDL_opengl.h>
+#include <SDL_mixer.h>
 
 #include <glm.hpp>
 #include <common.hpp>
@@ -22,5 +23,8 @@
 #include <gtc/type_ptr.hpp>
 #include <gtx/quaternion.hpp>
 #include <gtx/string_cast.hpp>
+#include <map>
+
+enum class soundType{ sfx, music };
 
 #endif //PCH_H

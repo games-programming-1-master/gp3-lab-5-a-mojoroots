@@ -82,8 +82,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SDL2\SDL2-2.0.4\include;$(SolutionDir)glew-2.1.0\include\GL;$(SolutionDir)glm;$(SolutionDir)stb\Include;$(SolutionDir)assimp;$(SolutionDir)bullet;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDL2\SDL2-2.0.4\lib\x64;$(SolutionDir)glew-2.1.0\lib\Release\x64;$(SolutionDir)assimp\Lib;$(SolutionDir)bullet\Lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)SDL2\SDL2-2.0.4\include;$(SolutionDir)glew-2.1.0\include\GL;$(SolutionDir)glm;$(SolutionDir)stb\Include;$(SolutionDir)assimp;$(SolutionDir)SDL2\SDL2_mixer-2.0.1\include;$(SolutionDir)bullet;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)SDL2\SDL2_mixer-2.0.1\lib\x64;$(SolutionDir)SDL2\SDL2-2.0.4\lib\x64;$(SolutionDir)glew-2.1.0\lib\Release\x64;$(SolutionDir)assimp\Lib;$(SolutionDir)bullet\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -166,7 +166,7 @@ xcopy /Y "assimp\Lib\*.dll" "$(OutDir)"</Command>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;assimp.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;assimp.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;SDL2_mixer.lib</AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -229,6 +229,8 @@ xcopy /Y "bullet\Lib\*.dll" "$(OutDir)"</Command>
     <ClCompile Include="CameraComp.cpp" />
     <ClCompile Include="CollisionShape.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="cSound.cpp" />
+    <ClCompile Include="cSoundMgr.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Lab5.cpp" />
@@ -253,6 +255,8 @@ xcopy /Y "bullet\Lib\*.dll" "$(OutDir)"</Command>
     <ClInclude Include="CollisionShape.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="cSound.h" />
+    <ClInclude Include="cSoundMgr.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputState.h" />

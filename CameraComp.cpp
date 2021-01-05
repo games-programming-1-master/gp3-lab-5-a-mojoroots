@@ -15,10 +15,17 @@ void CameraComp::Start()
 {
 	m_camera = new Camera(m_entity->GetTransform());
 
-	if (Application::GetInstance()->GetCamera() == nullptr)
-	{
-		Application::GetInstance()->SetCamera(m_camera);
-	}
+	//if (Application::GetInstance()->GetCamera() == nullptr)
+	//{
+	Application::GetInstance()->SetCamera(m_camera);
+	//}
 }
 
+void CameraComp::Start2()
+{
+	s_camera = new Camera(m_entity->GetTransform());
+	Application::GetInstance()->SetCamera(s_camera);
+
+
+}
 

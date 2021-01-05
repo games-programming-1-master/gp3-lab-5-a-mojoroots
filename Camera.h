@@ -6,12 +6,14 @@
 
 enum CameraType { PERSPECTIVE, ORTHOGRAPHIC };
 
+
 class Camera
 {
 private:
 	Transform* m_parentTransform;
 	glm::mat4 m_projMatrix, m_viewMatrix, VP;
 	CameraType m_type = CameraType::PERSPECTIVE;
+	glm::vec3 changePosition;
 
 	float m_nearPlane = 0.1f;
 	float m_farPlane = 1000.f;
@@ -31,6 +33,9 @@ private:
 
 	Camera();
 public:
+
+
+
 	Camera(Transform* parent, CameraType type = CameraType::PERSPECTIVE);
 
 	void Recalculate();
@@ -48,4 +53,7 @@ public:
 	void SetProjPersp(float fov, float ratio, float nearPlane, float farPlane);
 	//sets the orthographic projection
 	void SetProjOrtho(float left, float right, float bottom, float top, float nearPlane, float farPlane);
+	void SetS_camera();
+	void SetM_camera();
+
 };

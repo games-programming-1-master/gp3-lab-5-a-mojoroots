@@ -42,3 +42,8 @@ void MeshRenderer::OnRender()
 		GL_ATTEMPT(glDrawElements(GL_TRIANGLES, mesh->GetIndiciesCount(), GL_UNSIGNED_INT, 0));
 	}
 }
+
+void MeshRenderer::ChangeTexture(std::shared_ptr<Texture> stexture)
+{
+	m_texture = stexture;
+}

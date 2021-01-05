@@ -1,5 +1,11 @@
 #include "pch.h"
 #include "Camera.h"
+#include "Windows.h"
+
+
+
+
+float camDistx;
 
 Camera::Camera(Transform* parent, CameraType type)
 {
@@ -17,11 +23,26 @@ Camera::Camera(Transform* parent, CameraType type)
 	}
 }
 
+
+
 void Camera::Recalculate()
 {
+	extern float camDistance;
+
+
+
+
+
+
+
+
 	if (m_parentTransform != nullptr)
 	{
-		m_viewMatrix = glm::lookAt(m_parentTransform->GetPosition(),
+
+
+
+
+		m_viewMatrix = glm::lookAt(m_parentTransform->GetPosition() + glm::vec3(0.f, 0.f, 0.f + camDistance) + changePosition,
 			m_parentTransform->GetPosition() + m_parentTransform->GetForward(),
 			m_parentTransform->GetUp());
 
@@ -51,3 +72,20 @@ void Camera::SetProjOrtho(float left, float right, float bottom, float top, floa
 	m_right = right;
 	m_projMatrix = glm::ortho(left, right, bottom, top, nearPlane, farPlane);
 }
+
+
+void Camera::SetM_camera()
+{
+	extern float camDistance;
+
+	changePosition = glm::vec3(0.0f, 5.0f, -20.0f);
+}
+
+void Camera::SetS_camera()
+{
+	extern float camDistance;
+
+	changePosition = glm::vec3(0.0f, 30.0f, -50.0f);
+}
+
+

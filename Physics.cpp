@@ -62,3 +62,23 @@ Physics* Physics::GetInstance()
 	}
 	return m_instance;
 }
+
+bool Physics::Collision3D(btCollisionObject* obj1, int id1, int index1, btCollisionObject* obj2, int id2, int index2)
+{
+	if ((obj1->getBroadphaseHandle()->m_aabbMax.x() < obj2->getBroadphaseHandle()->m_aabbMin.x()) || (obj1->getBroadphaseHandle()->m_aabbMin.x() > obj2->getBroadphaseHandle()->m_aabbMax.x()))
+	{
+		return false;
+	}
+
+	if ((obj1->getBroadphaseHandle()->m_aabbMax.y() < obj2->getBroadphaseHandle()->m_aabbMin.y()) || (obj1->getBroadphaseHandle()->m_aabbMin.y() > obj2->getBroadphaseHandle()->m_aabbMax.y()))
+	{
+		return false;
+	}
+
+	if ((obj1->getBroadphaseHandle()->m_aabbMax.z() < obj2->getBroadphaseHandle()->m_aabbMin.z()) || (obj1->getBroadphaseHandle()->m_aabbMin.z() > obj2->getBroadphaseHandle()->m_aabbMax.z()))
+	{
+		return false;
+	}
+
+	return true;
+}

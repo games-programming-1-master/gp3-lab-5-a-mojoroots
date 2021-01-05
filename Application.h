@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include <string>
 
 class Camera;
 
@@ -16,7 +17,7 @@ class Application
 private:
 	//private variables
 	static Application* m_application;
-	SDL_Window *m_window = nullptr;
+	SDL_Window* m_window = nullptr;
 	SDL_GLContext m_glContext = nullptr;
 	int m_windowWidth = 1280;
 	int m_windowHeight = 720;
@@ -24,16 +25,26 @@ private:
 	float m_worldDeltaTime = 0.f;
 	std::vector<Entity*> m_entities;
 	Camera* m_mainCamera = nullptr;
+	//GameSounds
+	std::vector<std::string>soundList;
+	std::vector<soundType>soundTypes;
+	std::vector<std::string>soundsToUse;
+
 
 	//private functions
 	Application();
 	void Init();
 	void OpenGlInit();
 	void GameInit();
+	void MousePos();
 	void Loop();
 	void Quit();
 	void Update(float deltaTime);
 	void Render();
+	void Spawn();
+	void Spawn2();
+	void timer1();
+	void Delay(int nSecs);
 
 public:
 	//public functions

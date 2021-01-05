@@ -20,6 +20,6 @@ public:
 	virtual void UpdateParent();
 	virtual void UpdateRigidBody();
 
-	btRigidBody* Get() { return m_rigidBody; }
+   	btRigidBody* Get() { return m_rigidBody; }
 };
 
