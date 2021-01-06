@@ -446,7 +446,7 @@ void Application::GameInit()
 	);
 	MeshRenderer* o = c->GetComponent<MeshRenderer>();
 	// sets models position
-	c->GetTransform()->SetPosition(glm::vec3(1.f, 1.f, -10.f));
+	c->GetTransform()->SetPosition(glm::vec3(1.f, 1.f, -20.f));
 	// sets rotation
 	c->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
 	// adds Rigidbody
@@ -474,6 +474,8 @@ void Application::GameInit()
 	b->AddComponent(cc);
 
 	cc->Start();
+
+	
 
 	Resources::GetInstance()->ReleaseUnusedResources();
 
@@ -563,12 +565,6 @@ void Application::Loop()
 		{
 			std::cout << "Hit A" << std::endl;
 		}
-
-		if (Physics::GetInstance()->Collision3D(b->GetComponent<RigidBody>()->Get(), c->GetComponent<RigidBody>()->Get()) == true)
-		{
-			std::cout << "Hit C" << std::endl;
-		}
-
 		// code for controling the collision for player 1's ball
 		if (ballInPlay == true)
 		{
@@ -625,7 +621,8 @@ void Application::Loop()
 				//repositions player 1's ball under the map once it has collided
 				e->GetTransform()->AddPosition(glm::vec3(0.f, -10.f, 0.f));
 				ballInPlay = false;
-
+				
+		
 			}
 
 		}
@@ -765,7 +762,7 @@ void Application::Loop()
 					*/
 				case SDLK_r:
 					// resets player 1's position in case they get stuck
-					b->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
+					b->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, -20.f));
 				case SDLK_3:
 					m_mainCamera->SetProjOrtho(-500, (float)WINDOW_W, 0, (float)WINDOW_H, 0.1f, 1000.f);
 					break;
@@ -817,6 +814,15 @@ void Application::Loop()
 					}
 					break;
 					*/
+				case SDLK_y:
+					c->GetTransform()->SetPosition(glm::vec3(1.f, 1.f, -20.f));
+					break;
+				case SDLK_u:
+					c->GetTransform()->AddRotation(glm::quat(1.f, 0.f, 1.f, 0.f));
+					break;
+				case SDLK_o:
+					c->GetTransform()->AddRotation(glm::quat(1.f, 0.f, -1.f, 0.f));
+					break;
 				case SDL_MOUSEMOTION:
 					INPUT->MoveMouse(glm::ivec2(event.motion.xrel, event.motion.yrel));
 					SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -838,17 +844,64 @@ void Application::Loop()
 						musicon = true;
 					}
 						break;
-				case SDLK_u:
-					c->GetTransform()->AddRotation(glm::quat(1.f, 0.f, 1.f, 0.f));
-					c->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
-					break;
-				case SDLK_o:
-					c->GetTransform()->AddRotation(glm::quat(1.f, 0.f, -1.f, 0.f));
-					break;
+				
 				}
 				
 
-
+				currentKeyStates[SDL_SCANCODE_RETURN];
+				// player 1 controls
+				if (currentKeyStates[SDL_SCANCODE_A])
+				{
+					b->GetTransform()->AddPosition(glm::vec3(0.2f, 0.f, 0.f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_D])
+				{
+					b->GetTransform()->AddPosition(glm::vec3(-0.2f, 0.f, 0.f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_W])
+				{
+					b->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 0.2f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_S])
+				{
+					b->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, -0.2f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_F]) {
+					if (ballInPlay == false)
+					{
+						theSoundMgr->getSnd("shoot")->play(0);
+						Spawn();
+						// applies a central impules to player 1 ball to shoot it forwards
+						e->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, 35.0f));
+						ballInPlay = true;
+					}
+				}
+				// player 2 controls
+				if (currentKeyStates[SDL_SCANCODE_J])
+				{
+					c->GetTransform()->AddPosition(glm::vec3(0.2f, 0.f, 0.f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_L])
+				{
+					c->GetTransform()->AddPosition(glm::vec3(-0.2f, 0.f, 0.f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_I])
+				{
+					c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 0.2f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_K])
+				{
+					c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, -0.2f));
+				}
+				if (currentKeyStates[SDL_SCANCODE_H]) {
+					if (p2Shot == false)
+					{
+						theSoundMgr->getSnd("shoot")->play(0);
+						Spawn2();
+						k->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, -35.0f));
+						p2Shot = true;
+					}
+				}
 
 
 				//record when the user releases a key
@@ -867,52 +920,7 @@ void Application::Loop()
 		//update and render all entities
 		Update(deltaTime);
 		Render();
-		currentKeyStates[SDL_SCANCODE_RETURN];
-		// player 1 controls
-			if (currentKeyStates[SDL_SCANCODE_A])
-			{b->GetTransform()->AddPosition(glm::vec3(0.2f, 0.f, 0.f));}
-			if (currentKeyStates[SDL_SCANCODE_D])
-			{b->GetTransform()->AddPosition(glm::vec3(-0.2f, 0.f, 0.f));}
-			if (currentKeyStates[SDL_SCANCODE_W])
-			{b->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 0.2f));}
-			if (currentKeyStates[SDL_SCANCODE_S])
-			{b->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, -0.2f));}
-			if (currentKeyStates[SDL_SCANCODE_F]) {
-				if (ballInPlay == false)
-				{
-					theSoundMgr->getSnd("shoot")->play(0);
-					Spawn();
-					// applies a central impules to player 1 ball to shoot it forwards
-					e->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, 35.0f));
-					ballInPlay = true;
-				}
-			}
-			// player 2 controls
-			if (currentKeyStates[SDL_SCANCODE_J])
-			{
-				c->GetTransform()->AddPosition(glm::vec3(0.2f, 0.f, 0.f));
-			}
-			if (currentKeyStates[SDL_SCANCODE_L])
-			{
-				c->GetTransform()->AddPosition(glm::vec3(-0.2f, 0.f, 0.f));
-			}
-			if (currentKeyStates[SDL_SCANCODE_I])
-			{
-				c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, 0.2f));
-			}
-			if (currentKeyStates[SDL_SCANCODE_K])
-			{
-				c->GetTransform()->AddPosition(glm::vec3(0.0f, 0.f, -0.2f));
-			}
-			if (currentKeyStates[SDL_SCANCODE_H]) {
-				if (p2Shot == false)
-				{
-					theSoundMgr->getSnd("shoot")->play(0);
-					Spawn2();
-					k->GetComponent<RigidBody>()->Get()->applyCentralImpulse(btVector3(0.0f, 0.0f, -25.0f));
-					p2Shot = true;
-				}
-			}
+		
 
 
 		SDL_GL_SwapWindow(m_window);
