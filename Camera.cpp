@@ -30,17 +30,8 @@ void Camera::Recalculate()
 	extern float camDistance;
 
 
-
-
-
-
-
-
 	if (m_parentTransform != nullptr)
 	{
-
-
-
 
 		m_viewMatrix = glm::lookAt(m_parentTransform->GetPosition() + glm::vec3(0.f, 0.f, 0.f + camDistance) + changePosition,
 			m_parentTransform->GetPosition() + m_parentTransform->GetForward(),
