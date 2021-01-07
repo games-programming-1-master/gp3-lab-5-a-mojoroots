@@ -444,11 +444,11 @@ void Application::GameInit()
 	);
 	MeshRenderer* o = c->GetComponent<MeshRenderer>();
 	// sets models position
-<<<<<<< Updated upstream
+
 	c->GetTransform()->SetPosition(glm::vec3(1.f, 1.f, -10.f));
-=======
+
 	c->GetTransform()->SetPosition(glm::vec3(1.f, 1.f, 20.f));
->>>>>>> Stashed changes
+
 	// sets rotation
 	c->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
 	// adds Rigidbody
@@ -483,15 +483,13 @@ void Application::GameInit()
 
 void Application::player1Wins()
 {
-<<<<<<< Updated upstream
-	// displays player 2's lives and that player 1 has won on the console window
-	std::cout << "Player2 has" + player2Lives << "Lives left" << std::endl;
-	std::cout << "Player 1 Wins" << std::endl;
+
+
+	
 	// creates the player 1 wins object
-=======
+
 
 	// adds a 3d object showing player 2 has won
->>>>>>> Stashed changes
 	m_entities.push_back(l);
 	l->AddComponent(
 		new MeshRenderer(
@@ -500,7 +498,6 @@ void Application::player1Wins()
 			// sets the shader to be used
 			Resources::GetInstance()->GetShader("simple"),
 			// sets the texture to be used
-<<<<<<< Updated upstream
 			Resources::GetInstance()->GetTexture("Images/Textures/Blue.png"))
 	);
 	MeshRenderer* b = l->GetComponent<MeshRenderer>();
@@ -515,22 +512,8 @@ void Application::player1Wins()
 	l->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
 	// sets the scale of the player 1 wins object
 	l->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
-=======
-			Resources::GetInstance()->GetTexture("Images/Textures/Red.png"))
-	);
-	MeshRenderer* c = l->GetComponent<MeshRenderer>();
-	// sets the location for player 2 wins object
-	l->GetTransform()->SetPosition(glm::vec3(0.f, 5.f, 0.f));
-	// sets the rotation for player 2 wins object
-	l->GetTransform()->SetRotation(glm::quat(1.f, 0.f, 30.f, 0.f));
-	// adds a rigid body to player 2 wins object
-	l->AddComponent<RigidBody>();
-	// sets the rigidbody size of player 2 wins object
-	l->GetComponent<RigidBody>()->Init(new BoxShape(glm::vec3(1.f, 1.f, 1.f)));
-	l->GetComponent<RigidBody>()->Get()->setMassProps(0, btVector3());
-	// sets the scale of player 2 wins object
-	l->GetTransform()->SetScale(glm::vec3(2.f, 2.f, 2.f));
 
+	
 
 
 
@@ -538,7 +521,7 @@ void Application::player1Wins()
 		
 	
 	
->>>>>>> Stashed changes
+
 }
 
 void Application::player2Wins()
@@ -781,13 +764,13 @@ void Application::Loop()
 					break;
 				case SDLK_r:
 					// resets player 1's position in case they get stuck
-<<<<<<< Updated upstream
+
 					b->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, 0.f));
 				case SDLK_3:
 					m_mainCamera->SetProjOrtho(-500, (float)WINDOW_W, 0, (float)WINDOW_H, 0.1f, 1000.f);
-=======
+
 					b->GetTransform()->SetPosition(glm::vec3(0.f, 1.f, -20.f));
->>>>>>> Stashed changes
+
 					break;
 				/*case SDLK_3:
 					m_mainCamera->SetProjOrtho(100.f, (float)WINDOW_W, 0, (float)WINDOW_H, 0.1f, 1000.f);
